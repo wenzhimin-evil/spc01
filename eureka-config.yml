@@ -8,7 +8,7 @@ spring:
     application:
         name: microservicecloud-eureka-client-dev
 server:
-  port: 7001
+  port: 8761
 eureka:
   instance:
     hostname: localhost    #hostname为hosts文件中映射的地址
@@ -17,6 +17,11 @@ eureka:
     fetch-registry: false           #false表示自己就是注册中心，职责是维护实例，不参加检索
     service-url:
       defaultZone: http://localhost:7001/eureka/   #设置eureka server的交互地址
+  server:
+    #开启自我保护模式（开启状态下服务停掉eureka不会立即清除掉宕掉的服务，所以false）
+    enable-self-preservation: false 
+    #清理无效节点,默认60*1000毫秒,即60秒
+    eviction-interval-timer-in-ms: 5000
 
 ---
 spring:
@@ -24,7 +29,7 @@ spring:
     application:
         name: microservicecloud-eureka-client-dev
 server:
-  port: 7001
+  port: 8761
 eureka:
   instance:
     hostname: localhost    #hostname为hosts文件中映射的地址
@@ -33,3 +38,8 @@ eureka:
     fetch-registry: false           #false表示自己就是注册中心，职责是维护实例，不参加检索
     service-url:
       defaultZone: http://localhost:7001/eureka/    #设置eureka server的交互地址
+  server:
+    #开启自我保护模式（开启状态下服务停掉eureka不会立即清除掉宕掉的服务，所以false）
+    enable-self-preservation: false 
+    #清理无效节点,默认60*1000毫秒,即60秒
+    eviction-interval-timer-in-ms: 5000
