@@ -14,7 +14,7 @@ mybatis:
 spring:
   profiles: dev
   application:
-    name: microservicecloud-dept111   #为这个服务取名，非常重要！！！！！
+    name: microservicecloud-dept222   #为这个服务取名，非常重要！！！！！
   datasource:
     url: jdbc:mysql://localhost:3306/shiro?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
     username: root
