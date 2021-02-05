@@ -1,49 +1,3 @@
-spring: 
-    profiles: 
-        active:
-           - dev
----
-server:
-  port: 9001
-
-mybatis:
-  config-location: classpath:mybatis/mybatis.cfg.xml
-  type-aliases-package: com.XXX.entity
-  mapper-locations:
-  - classpath:mybatis/mapper/**/*.xml
-spring:
-  profiles: dev
-  application:
-    name: microservicecloud-zuul   #为这个服务取名，非常重要！！！！！
-  datasource:
-    url: jdbc:mysql://localhost:3306/shiro?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
-    username: root
-    password: 123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    # 下面为连接池的补充设置，应用到上面所有数据源中
-    # 初始化大小，最小，最大
-    maxActive: 20
-    initialSize: 1
-    # 配置获取连接等待超时的时间
-    maxWait: 60000
-    minIdle: 1
-    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x'
-    testWhileIdle: true 
-    testOnBorrow: false 
-    testOnReturn: false 
-    # 打开PSCache，并且指定每个连接上PSCache的大小
-    poolPreparedStatements: true 
-    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    max-pool-prepared-statement-per-connection-size: 20
-    filters: stat,wall
-    use-global-data-source-stat: true 
-    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-    connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 eureka:
   client:
     service-url:
@@ -60,9 +14,6 @@ zuul:
       path: /provider/**    # 自定义映射服务器路径的名称（相当于key，外部访问这个地址会映射到下面的service-id这个value值。然后从eureka服务列表找到对应服务名称，进而负载均衡的请求一个服务器）
 #      url: http://127.0.0.1:8093  # 这是写的固定映射url，可代替service-id。但是不能实现服务器的负载均衡和高可用，因为总是访问同一服务器
       service-id: microservicecloud-provider     # eureka注册中心中要映射的服务名称，因为是双层map结构，所以可以实现负载均衡和高可用
-    zuul-service02:               # 搭建另一个映射服务器，这里就简单的映射同一服务了。简单测试下而已
-      path: /user-service-zuul-first/**
-      service-id: user-service    # 映射服务器名称简单的使用上面的，仅供测试
 #  因为zuul是整合ribbon和hystrix的另一个客户端，所以我们需要自己导入spring-retry坐标，并且开启服务
   #retryable: true
 #  配置zuul的连接时间，一般不需要配置
@@ -73,52 +24,3 @@ zuul:
 #  ignored-services: microservice-comsumer-movie-ribbon-withhystrix    # 这是表示某一个服务不允许代理，
   sensitive-headers:  #设置忽略的头信息，设置为空能解决会话保持问题
   add-host-header: true #设为true才能保持Host头信息处理正确
----
-server:
-  port: 9001
-
-mybatis:
-  config-location: classpath:mybatis/mybatis.cfg.xml
-  type-aliases-package: com.XXX.entity
-  mapper-locations:
-  - classpath:mybatis/mapper/**/*.xml
-spring:
-  profiles: test
-  application:
-    name: microservicecloud-zuul   #为这个服务取名，非常重要！！！！！
-  datasource:
-    url: jdbc:mysql://localhost:3306/shiro?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
-    username: root
-    password: 123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    # 下面为连接池的补充设置，应用到上面所有数据源中
-    # 初始化大小，最小，最大
-    maxActive: 20
-    initialSize: 1
-    # 配置获取连接等待超时的时间
-    maxWait: 60000
-    minIdle: 1
-    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x'
-    testWhileIdle: true 
-    testOnBorrow: false 
-    testOnReturn: false 
-    # 打开PSCache，并且指定每个连接上PSCache的大小
-    poolPreparedStatements: true 
-    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    max-pool-prepared-statement-per-connection-size: 20
-    filters: stat,wall
-    use-global-data-source-stat: true 
-    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-    connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    instance-id: dept9001
-    prefer-ip-address: true 
