@@ -52,13 +52,13 @@ eureka:
     instance-id: dept9001
     prefer-ip-address: true 
 
-#自定义路由映射    
+#自定义路由映射  
 zuul:
   routes:
-    api-a:
+    cloud-config:
       path: /api/config/**
       serviceId: cloud-config
-    api-b:
+    microservicecloud-provider:
       path: /api/provider/**
       serviceId: microservicecloud-provider
   sensitive-headers:  #设置忽略的头信息，设置为空能解决会话保持问题
